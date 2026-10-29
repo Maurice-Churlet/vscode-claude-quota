@@ -1,0 +1,35 @@
+{
+  "name": "claude-quota",
+  "displayName": "Quota Claude",
+  "description": "Affiche dans la barre d'état le quota Claude (5 h, semaine, par modèle) d'après le cache local de Claude Code. Aucun identifiant lu, aucun token consommé.",
+  "version": "1.1.0",
+  "publisher": "maurice-churlet",
+  "license": "MIT",
+  "engines": { "vscode": "^1.90.0" },
+  "categories": ["Other"],
+  "main": "./extension.js",
+  "extensionKind": ["ui", "workspace"],
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "claudeQuota.refresh", "title": "Quota Claude : rafraîchir" }
+    ],
+    "configuration": {
+      "title": "Quota Claude",
+      "properties": {
+        "claudeQuota.autoRefreshMinutes": {
+          "type": "number",
+          "default": 30,
+          "minimum": 0,
+          "description": "Rafraîchissement automatique (minutes, 5 au minimum ; 0 = jamais). Ne consomme pas de tokens."
+        },
+        "claudeQuota.warnAt": { "type": "number", "default": 75, "description": "Fond orange à partir de ce pourcentage." },
+        "claudeQuota.errorAt": { "type": "number", "default": 90, "description": "Fond rouge à partir de ce pourcentage." },
+        "claudeQuota.showModels": { "type": "boolean", "default": true, "description": "Afficher aussi les limites propres à un modèle (ex. Fable)." }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/quota.test.js"
+  }
+}
